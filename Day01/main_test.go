@@ -1,6 +1,6 @@
 /* Author: Mecu Sorin       Phone: 0040747020102 */
 
-package main
+package day01
 
 import (
 	"testing"
@@ -55,6 +55,5 @@ var _ = Describe("Santa should know:", func() {
 		Entry("Sample 08", ")))", -3),
 		Entry("Sample 09", ")())())", -3),
 		Entry("Sample 10", "", 0),
-		Entry("The question", "", 280),
 	)
 })

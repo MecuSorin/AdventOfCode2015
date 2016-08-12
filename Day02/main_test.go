@@ -1,6 +1,6 @@
 /* Author: Mecu Sorin       Phone: 0040747020102 */
 
-package main
+package day02
 
 import (
 	. "github.com/onsi/ginkgo"
