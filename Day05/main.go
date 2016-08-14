@@ -15,6 +15,10 @@ var (
 	doubleLetter   = newPatternPCRE("([a-zA-Z])\\1+", true)
 	naughtyStrings = newPatternPCRE("(?=ab|cd|pq|xy)", false)
 	categorize     = createMatcher(specificVocals, doubleLetter, naughtyStrings)
+
+	doubleDoubleLetterWithoudOverlap    = newPatternPCRE("([a-zA-Z]{2}).*\\1", true)
+	repeatableLetterWithSingleLetterGap = newPatternPCRE("([a-zA-Z]).\\1", true)
+	categorizePuzzle2                   = createMatcher(doubleDoubleLetterWithoudOverlap, repeatableLetterWithSingleLetterGap)
 )
 
 type matcher interface {
