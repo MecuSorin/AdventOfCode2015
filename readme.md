@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/MecuSorin/AdventOfCode.svg?branch=master)](https://travis-ci.org/MecuSorin/AdventOfCode) 
+[![Build Status](https://travis-ci.org/MecuSorin/AdventOfCode.svg?branch=master)](https://travis-ci.org/MecuSorin/AdventOfCode) [![Coverage Status](https://coveralls.io/repos/github/MecuSorin/AdventOfCode/badge.svg?branch=master)](https://coveralls.io/github/MecuSorin/AdventOfCode?branch=master) 
  
 # Programming is fun
 
