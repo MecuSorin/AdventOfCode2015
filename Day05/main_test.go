@@ -15,7 +15,7 @@ func TestBootstaping(t *testing.T) {
 	RunSpecs(t, "Santa is searching for nice/naughty texts Suite")
 }
 
-var _ = Describe("Santa should know how to categorize words", func() {
+var _ = XDescribe("Santa should know how to categorize words", func() {
 	Context("Puzzle 1 scenario", func() {
 		DescribeTable("When a word is provided",
 			func(word string, expectedNiceWord bool) {
