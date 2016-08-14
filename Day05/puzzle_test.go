@@ -10,7 +10,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = XDescribe("Santa categorizing letters", func() {
+var _ = Describe("Santa categorizing letters", func() {
 	tester := func(categorizer func(string) bool, expectedNiceCount int) {
 		samples, err := os.Open("puzzle1.txt")
 		Expect(err).Should(Succeed())

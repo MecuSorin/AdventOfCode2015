@@ -1,14 +1,14 @@
 language: go
-sudo: false
+#sudo: false
 go:
 - tip
 before install:
-- go get github.com/mattn/goveralls
-- go get golang.org/x/tools/cmd/cover
-#- sudo apt-get -qq update
-#- sudo apt-get install -y libpcre++-dev
-script:
-- "$HOME/gopath/bin/goveralls -service=travis-ci"
+#- go get github.com/mattn/goveralls
+#- go get golang.org/x/tools/cmd/cover
+- sudo apt-get -qq update
+- sudo apt-get install -y libpcre++-dev
+#script:
+#- "$HOME/gopath/bin/goveralls -service=travis-ci"
 env:
   global:
     secure: XqkCQTny61xqYwx0WI8devDyhMOviaZoAO16Kczf0BV+WDz3vMNJ7UAUkdJZd+CMlaxZFIy/ENxjZ+n7lE1A65ZLGLEQTIqHF52UyixDAv5gj4QHq/edoomNZk62iBqXnHUwfueuAHVkpwHda94LBy9QqlRAWPIUSHuQntoAaujC1cRQn6NyWG+vtePUuxMiiv0r7QbM1Vr8F11+5AYCgj57j+tk1kayxQ00oryjdGkVxYFeRtVo7dvq70yscWBC0YjlIdBgPov6iX7IUc0osLzen0n65mJDvQJ++Gu4uYqVk8IAbutA8SUUNktlDCBNgYheifFitCwwtgpOYE+o4po8n08wLPZwkacUgwn/q5xNu8/YKyPT627uDH1m5uHaeph0Z6agPIBXl71Pcqr88UuGNM+/b+q3X2zhX0vQpxU4XBDW1tbEe08GZDlBjm84vMjd9Izo7AUM2Yo0B1CaUdmHZIJ0aj7mqG1hNyo2GAmcsfwDe50hHnouJptXLP2oCuxd0K7r43GYwPP4qj3WGXLqUVTsD4dYNK1xfsaVdEDg7n9TFhV5XvREFjAt0QeBVsbleDB7YQa1mKSC//qQcjmS910wJgMxQGzjVAzz+end6lds4D58CUTpJaFGm5PTViSkTHIhSr6k7r3j1QWwYmbVhSeBpG60FQ1YON+fYAU=
