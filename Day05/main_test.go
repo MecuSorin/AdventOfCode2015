@@ -16,6 +16,10 @@ func TestBootstaping(t *testing.T) {
 }
 
 var _ = Describe("Santa should know how to categorize words", func() {
+	Specify("Should return error when a bad regex pattern is provided", func() {
+		p := newPatternPCRE("(", false)
+		Expect(p.err).ShouldNot(Succeed())
+	})
 	Context("Puzzle 1 scenario", func() {
 		DescribeTable("When a word is provided",
 			func(word string, expectedNiceWord bool) {

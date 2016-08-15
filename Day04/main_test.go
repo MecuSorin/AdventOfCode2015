@@ -3,6 +3,7 @@
 package day04
 
 import (
+	"runtime"
 	"testing"
 
 	. "github.com/onsi/ginkgo"
@@ -16,6 +17,19 @@ func TestBootstaping(t *testing.T) {
 }
 
 var _ = Describe("Santa is searching for numbers to generate special md5 hashes:", func() {
+	Specify("Should know how many available procs to use", func() {
+		oldMaxProcs := runtime.GOMAXPROCS(0)
+		defer runtime.GOMAXPROCS(oldMaxProcs)
+		runtime.GOMAXPROCS(1)
+		Expect(maxParallelism()).To(Equal(1))
+	})
+
+	Specify("Should return error when an ill formated regex pattern is provided", func() {
+		_, err := findNumberThatGenerateAMD5HashWithPatternSynchronous("aaa", "(", 0)
+		Expect(err).ShouldNot(Succeed())
+		_, err = findNumberThatGenerateAMD5HashWithPatternAsynchronous("aaa", "(", 0)
+		Expect(err).ShouldNot(Succeed())
+	})
 	DescribeTable("Asynchronously searching md5 hashes that start with 00000",
 		func(secret string, expected int) {
 			Expect(findNumberThatGenerateAMD5HashWithPatternAsynchronous(secret, "^0{5}.*", 0)).To(Equal(expected))

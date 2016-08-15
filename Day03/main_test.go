@@ -17,6 +17,10 @@ func TestBootstaping(t *testing.T) {
 
 var _ = Describe("Santa travel on drunk elf instructions", func() {
 	Context("Single Santa:", func() {
+		Specify("Should return error when an unknown move command is issued", func() {
+			s := newSanta()
+			Expect(s.move("^><vV")).ShouldNot(Succeed())
+		})
 		DescribeTable("Given move directions checks position",
 			func(housedVisited int, moveCommands string, x, y int) {
 				s := newSanta()
@@ -50,6 +54,11 @@ var _ = Describe("Santa travel on drunk elf instructions", func() {
 		Specify("Error should be returned if no Santa is provided", func() {
 			_, err := getHousesVisited()
 			Expect(err).ShouldNot(Succeed())
+		})
+
+		Specify("Should return error when an unknown move command is issued", func() {
+			s1, s2 := newSanta(), newSanta()
+			Expect(process("^><vV", s1, s2)).ShouldNot(Succeed())
 		})
 
 		Specify("Counting visited houses from 1 Santas should work", func() {

@@ -11,10 +11,7 @@ func countFloorsAndGiveTheFirstCharThatBringsSantaOnDesiredFloor(instructions st
 	defer close(firstCharToTheFloor)
 
 	if floor == desiredFloor {
-		select {
-		case firstCharToTheFloor <- runeCounter:
-		default:
-		}
+		firstCharToTheFloor <- runeCounter
 	}
 
 	for i, width := 0, 0; i < len(instructions); i += width {

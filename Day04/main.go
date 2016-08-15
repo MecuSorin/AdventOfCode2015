@@ -88,7 +88,7 @@ func getHexadecimalMD5Hash(text string) string {
 func maxParallelism() int {
 	maxProcs := runtime.GOMAXPROCS(0)
 	numCPU := runtime.NumCPU()
-	if maxProcs < numCPU {
+	if maxProcs < numCPU && numCPU > 1 {
 		return maxProcs
 	}
 	return numCPU

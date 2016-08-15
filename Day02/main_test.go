@@ -17,6 +17,10 @@ func TestBootstaping(t *testing.T) {
 
 var _ = Describe("Elves should know:", func() {
 	Describe("How to interpret the gift sizes", func() {
+		It("Should return an error on an improper gift format like 1,2,3", func() {
+			_, _, err := getWrappingMaterials("1,2,3")
+			Expect(err).ShouldNot(Succeed())
+		})
 		It("Should interpret a gift format like 1x2x3", func() {
 			gifts, err := readGifts("1x2x3")
 			Expect(err).Should(Succeed())
