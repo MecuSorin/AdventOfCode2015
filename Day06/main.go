@@ -22,7 +22,10 @@ const (
 )
 
 var (
-	regex = regexp.MustCompile(`(\w+\s*\w+)\s+(\d+),(\d+)\s+through\s+(\d+),(\d+)`)
+	regex         = regexp.MustCompile(`(\w+\s*\w+)\s+(\d+),(\d+)\s+through\s+(\d+),(\d+)`)
+	puzzleToggle  = puzzle1Toggle
+	puzzleTurnOff = puzzle1TurnOff
+	puzzleTurnOn  = puzzle1TurnOn
 )
 
 type action struct {
@@ -32,9 +35,9 @@ type action struct {
 
 func parseAction(input string) (action, error) {
 	matchedGroups := regex.FindStringSubmatch(input)
-    if nil == matchedGroups {
-        return action{}, fmt.Errorf("Unknown action format: %q", input)
-    }
+	if nil == matchedGroups {
+		return action{}, fmt.Errorf("Unknown action format: %q", input)
+	}
 	var verb actionVerb
 	switch matchedGroups[1] {
 	case "toggle":
@@ -46,7 +49,7 @@ func parseAction(input string) (action, error) {
 	default:
 		return action{}, fmt.Errorf("Unknown action format: %q", input)
 	}
-    // all parsing below is guarded by the regex interpreter because of the pattern used
+	// all parsing below is guarded by the regex interpreter because of the pattern used
 	r1, _ := strconv.Atoi(matchedGroups[2])
 	c1, _ := strconv.Atoi(matchedGroups[3])
 	r2, _ := strconv.Atoi(matchedGroups[4])
@@ -74,23 +77,60 @@ type ledGrid struct {
 
 func (grid *ledGrid) apply(action action) {
 	view := grid.View(action.r1, action.c1, action.rows(), action.cols()).(*mat64.Dense)
-	var change func(i, j int, v float64) float64
+	var change func(int, int, float64) float64
 	switch action.Verb {
 	case toggle:
-		change = func(_ int, _ int, v float64) float64 {
-			if v == 1 {
-				return 0
-			}
-			return 1
-		}
+		change = puzzleToggle
 	case turnOn:
-		change = func(_ int, _ int, _ float64) float64 {
-			return 1
-		}
+		change = puzzleTurnOn
 	case turnOff:
-		change = func(_ int, _ int, _ float64) float64 {
-			return 0
-		}
+		change = puzzleTurnOff
 	}
 	view.Apply(change, view)
+}
+
+func puzzle1Toggle(_ int, _ int, v float64) float64 {
+	if v == 1 {
+		return 0
+	}
+	return 1
+}
+
+func puzzle1TurnOn(int, int, float64) float64 {
+	return 1
+}
+
+func puzzle1TurnOff(int, int, float64) float64 {
+	return 0
+}
+
+func puzzle2Toggle(_ int, _ int, v float64) float64 {
+	return v + 2.
+}
+
+func puzzle2TurnOn(_ int, _ int, v float64) float64 {
+	return v + 1.
+}
+
+func puzzle2TurnOff(_ int, _ int, v float64) float64 {
+	return max(0., v-1.)
+}
+
+func max(a, b float64) float64 {
+	if a < b {
+		return b
+	}
+	return a
+}
+
+func switchToDialect1() {
+	puzzleToggle = puzzle1Toggle
+	puzzleTurnOff = puzzle1TurnOff
+	puzzleTurnOn = puzzle1TurnOn
+}
+
+func switchToDialect2() {
+	puzzleToggle = puzzle2Toggle
+	puzzleTurnOff = puzzle2TurnOff
+	puzzleTurnOn = puzzle2TurnOn
 }
