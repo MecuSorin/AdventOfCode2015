@@ -12,7 +12,14 @@ type expression struct {
 	failed error
 }
 
-var errorUnprocessed = fmt.Errorf("Unprocessed")
+var (
+	errorUnprocessed = fmt.Errorf("Unprocessed")
+	getInitialState  = defaultGetInitialState
+)
+
+func defaultGetInitialState() map[string]int {
+	return make(map[string]int)
+}
 
 func newExpression(p parser, lexons []lexon) expression {
 	return expression{p, lexons, errorUnprocessed}
@@ -28,7 +35,7 @@ func (e *expression) process(state map[string]int) (now bool, done bool) {
 }
 
 func evaluateExpressions(expressions []expression) (map[string]int, error) {
-	state := make(map[string]int)
+	state := getInitialState()
 	processed, remaining := true, false
 	for processed {
 		processed, remaining = false, false

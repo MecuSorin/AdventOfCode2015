@@ -9,6 +9,8 @@ import (
 
 type lexonMatcherFn func(lexonType) bool
 
+type store map[string]int
+
 func receiver(typ lexonType) bool {
 	return lexonVariable == typ
 }
@@ -89,7 +91,13 @@ func process(instructions []string) (map[string]int, error) {
 	return evaluateExpressions(expressions)
 }
 
+func defaultHookSETUpdating(state map[string]int, l lexon, v int) {
+	state[l.val] = v
+}
+
 var (
+	hookSETUpdating = defaultHookSETUpdating
+
 	parserSET = parser{
 		[]lexonMatcherFn{provider, keyword(lexonKeywordEndGateTerminal), receiver},
 		func(state map[string]int, lexons []lexon) error {
@@ -97,7 +105,7 @@ var (
 			if nil != err {
 				return err
 			}
-			state[lexons[2].val] = v
+			hookSETUpdating(state, lexons[2], v)
 			return nil
 		},
 	}
