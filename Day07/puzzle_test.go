@@ -32,6 +32,7 @@ var _ = Describe("Santa needs help assembling the circuit", func() {
 			for scanner.Scan() {
 				instructions = append(instructions, scanner.Text())
 			}
+			Expect(scanner.Err()).Should(Succeed())
 			state, err := process(instructions)
 			Expect(err).Should(Succeed())
 			assertOnState(state)
