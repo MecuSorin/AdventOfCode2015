@@ -38,9 +38,22 @@ var _ = Describe("Counting chars", func() {
 		Entry(`"\\\x33\\\""`, `"\\\x33\\\""`, 8),
 	)
 
+	DescribeTable("Encoding samples",
+		func(text, expectedEncoded string) {
+			Expect(encodeString(text)).To(Equal(expectedEncoded))
+		},
+		Entry(`a`, `a`, `"a"`),
+		Entry(`"`, `"`, `"\""`),
+		Entry(`\`, `\`, `"\\"`),
+		Entry(`""`, `""`, `"\"\""`),
+		Entry(`"abc"`, `"abc"`, `"\"abc\""`),
+		Entry(`"aaa\"aaa"`, `"aaa\"aaa"`, `"\"aaa\\\"aaa\""`),
+		Entry(`"\x27"`, `"\x27"`, `"\"\\x27\""`),
+	)
+
 	Context("Puzzle tests", func() {
 		DescribeTable("Given the input",
-			func(expectation int) {
+			func(alteration func(string) string, expectation int) {
 				puzzleInput, err := os.Open("puzzle.input")
 				Expect(err).Should(Succeed())
 				defer puzzleInput.Close()
@@ -48,7 +61,7 @@ var _ = Describe("Counting chars", func() {
 				counter := 0
 				scanner := bufio.NewScanner(puzzleInput)
 				for scanner.Scan() {
-					text := scanner.Text()
+					text := alteration(scanner.Text())
 					counter += charsCountDelta(text)
 				}
 				Expect(scanner.Err()).Should(Succeed())
@@ -56,7 +69,8 @@ var _ = Describe("Counting chars", func() {
 				Expect(counter).To(Equal(expectation))
 			},
 
-			Entry("Puzzle 1", 1350),
+			Entry("Puzzle 1", func(x string) string { return x }, 1350),
+			Entry("Puzzle 2", func(x string) string { return encodeString(x) }, 2085),
 		)
 	})
 })
