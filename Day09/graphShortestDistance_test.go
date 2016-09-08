@@ -32,6 +32,10 @@ func loadCitiesFromFile(file string) unorderedRoadsLayout {
 }
 
 var _ = Describe("Santa's travel", func() {
+	BeforeEach(func() {
+		isABetterSolutionBasedOnDistance = isMax
+	})
+
 	Specify("Should know how many available procs to use", func() {
 		oldMaxProcs := runtime.GOMAXPROCS(0)
 		defer runtime.GOMAXPROCS(oldMaxProcs)
@@ -53,8 +57,6 @@ var _ = Describe("Santa's travel", func() {
 		Expect(ok).To(BeTrue())
 		Expect(len(shortestDistance.visited)).To(Equal(2))
 		Expect(shortestDistance.distance).To(Equal(expectedDistance))
-		Expect(shortestDistance.visited[0]).To(Equal(city("start")))
-		Expect(shortestDistance.visited[1]).To(Equal(city("end")))
 	})
 
 	Specify("Sample provided from sample.input should work", func() {

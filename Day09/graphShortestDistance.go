@@ -7,6 +7,21 @@ import (
 	"sync"
 )
 
+var (
+	isABetterSolutionBasedOnDistance = isMax
+)
+
+func min(a, b uint) uint {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func isMin(a, b uint) bool { return a == min(a, b) }
+
+func isMax(a, b uint) bool { return !isMin(a, b) }
+
 type toCity struct {
 	toCity   city
 	distance uint
@@ -49,7 +64,7 @@ func findShortestDistance(roadsLayout unorderedRoadsLayout) (shortestDistanceJob
 	solutionFound := false
 	minDistance := shortestDistanceJobResult{}
 	for result := range solutionsProvidedByWorker {
-		if !solutionFound || minDistance.distance > result.distance {
+		if !solutionFound || isABetterSolutionBasedOnDistance(minDistance.distance, result.distance) {
 			solutionFound = true
 			minDistance = result
 		}
