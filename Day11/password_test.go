@@ -74,4 +74,9 @@ var _ = Describe("When Santa must change password by succesive incrementations",
 		Expect(err).Should(Succeed())
 		Expect(actual).To(Equal("hepxxyzz"))
 	})
+	Specify("Given puzzle 2 input: hepxxyzz", func() {
+		actual, err := getNextPassword("hepxxyzz")
+		Expect(err).Should(Succeed())
+		Expect(actual).To(Equal("heqaabcc"))
+	})
 })
